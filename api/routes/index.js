@@ -1,4 +1,5 @@
 const express = require("express");
+const people = require('./personRoute');
 
 function routes(app) {
    app.route('/').get((req, res) => {
@@ -9,7 +10,10 @@ function routes(app) {
       );
    });
 
-   app.use(express.json());
+   app.use(
+      express.json(),
+      people
+   );
 }
 
 module.exports = routes;

@@ -1,4 +1,4 @@
-import database from '../models';
+const database = require('../models');
 
 class PersonController {
 
@@ -13,4 +13,4 @@ class PersonController {
 
 }
 
-export default PersonController;
+module.exports = PersonController;
