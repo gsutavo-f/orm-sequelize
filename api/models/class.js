@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       Class.belongsTo(models.Person, {
         foreignKey: "professorId"
       });
-      Class.belongsTo(models.Level);
+      Class.belongsTo(models.Level, {
+        foreignKey: "levelId"
+      });
     }
   }
   Class.init({
