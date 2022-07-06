@@ -1,5 +1,7 @@
 const express = require("express");
-const people = require('./personRoute');
+const people = require('./personRoutes.js');
+const levels = require('./levelRoutes.js');
+const classes = require('./classRoutes.js');
 
 function routes(app) {
    app.route('/').get((req, res) => {
@@ -12,7 +14,9 @@ function routes(app) {
 
    app.use(
       express.json(),
-      people
+      people,
+      levels,
+      classes
    );
 }
 
