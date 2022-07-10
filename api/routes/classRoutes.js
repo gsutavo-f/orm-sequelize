@@ -7,6 +7,7 @@ router
    .get('/class', ClassController.getClasses)
    .get('/class/:id', ClassController.getClassById)
    .post('/class', ClassController.createClass)
+   .post('/class/:id/restore', ClassController.restoreClass)
    .put('/class/:id', ClassController.updateClass)
    .delete('/class/:id', ClassController.deleteClass);
 
