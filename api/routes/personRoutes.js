@@ -4,7 +4,8 @@ const PersonController = require('../controllers/PersonController');
 const router = Router();
 
 router
-   .get('/person', PersonController.getPeople)
+   .get('/person', PersonController.getActivePeople)
+   .get('/person/all', PersonController.getAllPeople)
    .get('/person/:id', PersonController.getPersonById)
    .get('/person/:studentId/registration', PersonController.getAllRegistrationsByStudent)
    .get('/person/:studentId/registration/:registrationId', PersonController.getRegistrationByStudent)
