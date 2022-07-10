@@ -1,10 +1,17 @@
 const database = require('../models');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 class ClassController {
 
    static async getClasses(req, res) {
+      const {initialDate, finalDate} = req.query;
+      const where = {};
+      initialDate || finalDate ? where.startDate = {} : null;
+      initialDate ? where.startDate[Op.gte] = initialDate : null;
+      finalDate ? where.startDate[Op.lte] = finalDate : null;
       try {
-         const classes = await database.Class.findAll();
+         const classes = await database.Class.findAll({where});
          return res.status(200).json(classes);
       } catch (error) {
          return res.status(500).json(error.message);
@@ -13,7 +20,6 @@ class ClassController {
 
    static async getClassById(req, res) {
       const {id} = req.params;
-
       try {
          const foundClass = await database.Class.findOne({
             where: {
