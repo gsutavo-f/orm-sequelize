@@ -15,7 +15,14 @@ module.exports = (sequelize, DataTypes) => {
    }
 
    Person.init({
-      name: DataTypes.STRING,
+      name: {
+         type: DataTypes.STRING,
+         validate: {
+            isName: function (value) {
+               if (value.length < 3) throw new Error('Name is to short');
+            }
+         }
+      },
       active: DataTypes.BOOLEAN,
       email: {
          type: DataTypes.STRING,
