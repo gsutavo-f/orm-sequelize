@@ -88,7 +88,7 @@ class PersonController {
       }
    }
 
-   static async getAllRegistrationsByStudent(req, res) {
+   static async getRegistrationsByStudent(req, res) {
       const {studentId} = req.params;
       try {
          const person = await database.Person.findOne({
@@ -97,6 +97,23 @@ class PersonController {
             }
          });
          const registrations = await person.getRegisteredClasses();
+         return res.status(200).json(registrations);
+      } catch (error) {
+         return res.status(500).json(error.message);
+      }
+   }
+
+   static async getRegistrationsByClass(req, res) {
+      const {classId} = req.params;
+      try {
+         const registrations = await database.Registration.findAndCountAll({
+            where: {
+               classId: Number(classId),
+               status: 'Active'
+            },
+            limit: 4,
+            order: [['studentId', 'ASC']]
+         });
          return res.status(200).json(registrations);
       } catch (error) {
          return res.status(500).json(error.message);
