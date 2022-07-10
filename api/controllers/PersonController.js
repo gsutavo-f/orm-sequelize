@@ -1,6 +1,4 @@
 const database = require('../models');
-const Sequelize = require("sequelize");
-const {where} = require("sequelize");
 
 class PersonController {
 
@@ -170,21 +168,25 @@ class PersonController {
    static async cancelStudentRegistration(req, res) {
       const {studentId} = req.params;
       try {
-         await database.Person.update({active: false},
-            {
-               where: {
-                  id: Number(studentId)
-               }
-            }
-         );
-         await database.Registration.update({status: 'Canceled'},
-            {
-               where: {
-                  studentId: Number(studentId)
-               }
-            }
-         );
-         return res.status(200).json({message: "Registrations canceled!"});
+         database.sequelize.transaction(async transaction => {
+            await database.Person.update({active: false},
+               {
+                  where: {
+                     id: Number(studentId)
+                  }
+               },
+               {transaction: transaction}
+            );
+            await database.Registration.update({status: 'Canceled'},
+               {
+                  where: {
+                     studentId: Number(studentId)
+                  }
+               },
+               {transaction: transaction}
+            );
+            return res.status(200).json({message: "Registrations canceled!"});
+         });
       } catch (error) {
          return res.status(500).json(error.message);
       }
