@@ -91,12 +91,13 @@ class PersonController {
    static async getAllRegistrationsByStudent(req, res) {
       const {studentId} = req.params;
       try {
-         const registration = await database.Registration.findAll({
+         const person = await database.Person.findOne({
             where: {
-               studentId: Number(studentId)
+               id: Number(studentId)
             }
          });
-         return res.status(200).json(registration);
+         const registrations = await person.getRegisteredClasses();
+         return res.status(200).json(registrations);
       } catch (error) {
          return res.status(500).json(error.message);
       }
