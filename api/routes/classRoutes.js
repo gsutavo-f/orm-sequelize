@@ -5,6 +5,7 @@ const router = Router();
 
 router
    .get('/class', ClassController.getClasses)
+   .get('/class/full', ClassController.getFullClasses)
    .get('/class/:id', ClassController.getClassById)
    .post('/class', ClassController.createClass)
    .post('/class/:id/restore', ClassController.restoreClass)

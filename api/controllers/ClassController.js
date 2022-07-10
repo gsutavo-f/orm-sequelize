@@ -32,6 +32,23 @@ class ClassController {
       }
    }
 
+   static async getFullClasses(req, res) {
+      const maxStudents = 2;
+      try {
+         const fullClasses = await database.Registration.findAndCountAll({
+            where: {
+               status: 'Active'
+            },
+            attributes: ['classId'],
+            group: ['classId'],
+            having: Sequelize.literal(`count(classId) >= ${maxStudents}`)
+         });
+         return res.status(200).json(fullClasses);
+      } catch (error) {
+         return res.status(500).json(error.message);
+      }
+   }
+
    static async createClass(req, res) {
       const bodyClass = req.body;
       try {
