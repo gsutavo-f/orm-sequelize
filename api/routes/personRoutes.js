@@ -16,6 +16,7 @@ router
    .post('/person/:studentId/registration/:registrationId/restore', PersonController.restoreRegistration)
    .put('/person/:id', PersonController.updatePerson)
    .put('/person/:studentId/registration/:registrationId', PersonController.updateRegistration)
+   .patch('/person/:studentId/registration/cancel', PersonController.cancelStudentRegistration)
    .delete('/person/:id', PersonController.deletePerson)
    .delete('/person/:studentId/registration/:registrationId', PersonController.deleteRegistration);
 
