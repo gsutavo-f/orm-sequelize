@@ -2,6 +2,9 @@ const database = require('../models');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
+// const Services = require('../services/Services.js');
+// const classServices = new Services('Person');
+
 class ClassController {
 
    static async getClasses(req, res) {

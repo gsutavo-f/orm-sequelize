@@ -1,10 +1,13 @@
 const database = require('../models');
 
+const {PersonServices} = require('../services');
+const personServices = new PersonServices();
+
 class PersonController {
 
    static async getActivePeople(req, res) {
       try {
-         const people = await database.Person.findAll();
+         const people = await personServices.getAllRegisters();
          return res.status(200).json(people);
       } catch (error) {
          return res.status(500).json(error.message);
