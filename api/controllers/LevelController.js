@@ -1,7 +1,5 @@
-const database = require('../models');
-
-const Services = require('../services/Services.js');
-const levelServices = new Services('Level');
+const {LevelServices} = require('../services');
+const levelServices = new LevelServices();
 
 class LevelController {
 
@@ -16,13 +14,8 @@ class LevelController {
 
    static async getLevelById(req, res) {
       const {id} = req.params;
-
       try {
-         const level = await database.Level.findOne({
-            where: {
-               id: Number(id)
-            }
-         });
+         const level = await levelServices.getOneRegister(id);
          return res.status(200).json(level);
       } catch (error) {
          return res.status(500).json(error.message);
@@ -32,7 +25,7 @@ class LevelController {
    static async createLevel(req, res) {
       const level = req.body;
       try {
-         await database.Level.create(level);
+         await levelServices.createRegister(level);
          return res.status(200).json({message: "Level created!"});
       } catch (error) {
          return res.status(500).json(error.message);
@@ -43,11 +36,7 @@ class LevelController {
       const {id} = req.params;
       const newLevel = req.body;
       try {
-         await database.Level.update(newLevel, {
-            where: {
-               id: Number(id)
-            }
-         });
+         await levelServices.updateRegister(id, newLevel);
          return res.status(200).json({message: "Level updated!"});
       } catch (error) {
          return res.status(500).json(error.message);
@@ -57,11 +46,7 @@ class LevelController {
    static async deleteLevel(req, res) {
       const {id} = req.params;
       try {
-         await database.Level.destroy({
-            where: {
-               id: Number(id)
-            }
-         });
+         await levelServices.deleteRegister(id);
          return res.status(200).json({message: "Level deleted!"});
       } catch (error) {
          return res.status(500).json(error.message);
@@ -71,11 +56,7 @@ class LevelController {
    static async restoreLevel(req, res) {
       const {id} = req.params;
       try {
-         await database.Level.restore({
-            where: {
-               id: Number(id)
-            }
-         });
+         await levelServices.restoreRegister(id);
          return res.status(200).json({message: "Level restored!"});
       } catch (error) {
          return res.status(500).json(error.message);

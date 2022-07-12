@@ -11,7 +11,17 @@ class Services {
 
    async getOneRegister(id) {
       return database[this.modelName]
-         .findOne({where: {id: id}});
+         .findOne({where: {id: Number(id)}});
+   }
+
+   async getAndCountRegisters(where = {}, aggregators) {
+      return database[this.modelName]
+         .findAndCountAll(
+            {
+               where: {...where},
+               ...aggregators
+            }
+         );
    }
 
    async createRegister(data) {
@@ -33,6 +43,22 @@ class Services {
       return database[this.modelName]
          .destroy({where: {id: id}});
    }
+
+   async deleteRegisters(where = {}) {
+      return database[this.modelName]
+         .destroy({where: {...where}});
+   }
+
+   async restoreRegister(id) {
+      return database[this.modelName]
+         .restore({where: {id: id}});
+   }
+
+   async restoreRegisters(where = {}) {
+      return database[this.modelName]
+         .restore({where: {...where}});
+   }
+
 }
 
 module.exports = Services;
