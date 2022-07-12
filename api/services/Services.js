@@ -10,23 +10,28 @@ class Services {
    }
 
    async getOneRegister(id) {
-      return database[this.modelName].findOne({
-         where: {
-            id: Number(id)
-         }
-      });
+      return database[this.modelName]
+         .findOne({where: {id: id}});
    }
 
    async createRegister(data) {
-
+      return database[this.modelName]
+         .create(data);
    }
 
-   async updateRegister(id, data) {
+   async updateRegister(id, data, transaction = {}) {
+      return database[this.modelName]
+         .update(data, {where: {id: id}}, transaction);
+   }
 
+   async updateRegisters(where, data, transaction = {}) {
+      return database[this.modelName]
+         .update(data, {where: {...where}}, transaction);
    }
 
    async deleteRegister(id) {
-
+      return database[this.modelName]
+         .destroy({where: {id: id}});
    }
 }
 
